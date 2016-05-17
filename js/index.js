@@ -51,12 +51,13 @@ $(document).ready(function() {
         $('.question-name').html(name + (qnum) +"/"+ total);
         $('.question').html(questions[count].question);
         for(var i=0; i<questions[count].options.length; i++) {
-            $('.inputs').append('<input class = "check" type="radio" name="question" value="'+questions[count].options[i]+'">'+questions[count].options[i]+'<br>')
+            $('.inputs').append('<input type="radio" name="question" value="'+questions[count].options[i]+'">'+questions[count].options[i]+'<br>')
         }
-    };
-
-    var atLeastOneRadio = function() {
-        return ($('input[type=radio]:checked').size() > 0);
+        //At this point, we have the radio buttons in the dom
+        //We can assign events to them
+        $('input[type=radio]').click(function() {
+            $('.next-question').prop("disabled", false);
+        })
     };
 
 
@@ -88,17 +89,13 @@ $(document).ready(function() {
         qnum++;
         count++;
         if (qnum <= 4) {
-            if(atLeastOneRadio()) {
-                loadQuestion();
-            }
+            loadQuestion();
         } else if (qnum == 6) {
-            if(atLeastOneRadio()) {
-                $('.question-name').html("Your Score:");
-                $('.question').html("You got X out of 5 questions correct!");
-                nextQuestion.html("Home Screen").click(function() {
-                    location.reload();
-                });
-            }
+            $('.question-name').html("Your Score:");
+            $('.question').html("You got X out of 5 questions correct!");
+            nextQuestion.html("Home Screen").click(function() {
+                location.reload();
+            });
         } else if (qnum == 5){
             loadQuestion();
             $('.next-question').html("Get Score!");
