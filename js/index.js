@@ -13,7 +13,7 @@ $(document).ready(function() {
     $(".newGame").click(function() {
         $(".game").fadeIn(1000);
     });
-    var nextQuestion = $(".next-question")
+    var nextQuestion = $(".next-question");
 
     nextQuestion.click(function() {
     console.log($('input:radio:checked').val());
@@ -80,20 +80,18 @@ $(document).ready(function() {
         $('.inputs').html("");
         qnum++;
         count++;
-        if (qnum == 5) {
+        if (qnum <= 4) {
             loadQuestion();
-            $('.next-question').html("Get Score!");
         } else if (qnum == 6) {
             $('.question-name').html("Your Score:");
             $('.question').html("You got X out of 5 questions correct!");
-            nextQuestion.html("Play Again!");
-            nextQuestion.click(function() {
-                qnum = 1;
-                count = 0;
-                $(".game").fadeIn(1000);
+            nextQuestion.html("Home Screen").click(function() {
+                location.reload();
             });
-        } else {
+        } else if (qnum == 5){
             loadQuestion();
+            $('.next-question').html("Get Score!");
         }
     });
 });
+
