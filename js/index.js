@@ -5,7 +5,7 @@ $(document).ready(function() {
         $(".overlay").fadeIn(1000);
     });
     $(".close").click(function() {
-        $(".overlay").fadeOut(1000);
+        $(".game").fadeIn(1000);
     });
     $(".navbar-brand").click(function() {
         location.reload();
@@ -13,8 +13,10 @@ $(document).ready(function() {
     $(".newGame").click(function() {
         $(".game").fadeIn(1000);
     });
-    $(".next-question").click(function() {
-        console.log($('input:radio:checked').val());
+    var nextQuestion = $(".next-question")
+
+    nextQuestion.click(function() {
+    console.log($('input:radio:checked').val());
     });
     var questions = [
         {
@@ -44,6 +46,7 @@ $(document).ready(function() {
         }
     ];
 
+    /*--- functions ---*/
     var loadQuestion = function (){
         $('.question-name').html(name + (qnum) +"/"+ total);
         $('.question').html(questions[count].question);
@@ -60,20 +63,37 @@ $(document).ready(function() {
     loadQuestion();
 
     /*--- When the Next Question Button is Hit ---*/
-    $('.next-question').click(function() {
+    /*$('.next-question').keypress(function(e){
+       if(e.which == 13){//Enter key pressed
+            $('.inputs').html("");
+            qnum++;
+            count++;
+            if(qnum == 5) {
+                loadQuestion();
+                $('.next-question').html("Get Score!");
+            } else {
+                loadQuestion();
+            }
+        }
+    });*/
+    nextQuestion.click(function() {
         $('.inputs').html("");
         qnum++;
         count++;
-        if(qnum == 5) {
+        if (qnum == 5) {
             loadQuestion();
             $('.next-question').html("Get Score!");
+        } else if (qnum == 6) {
+            $('.question-name').html("Your Score:");
+            $('.question').html("You got X out of 5 questions correct!");
+            nextQuestion.html("Play Again!");
+            nextQuestion.click(function() {
+                qnum = 1;
+                count = 0;
+                $(".game").fadeIn(1000);
+            });
         } else {
             loadQuestion();
         }
-
     });
-
-
-
-
 });
