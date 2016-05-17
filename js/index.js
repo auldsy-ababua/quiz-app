@@ -51,9 +51,14 @@ $(document).ready(function() {
         $('.question-name').html(name + (qnum) +"/"+ total);
         $('.question').html(questions[count].question);
         for(var i=0; i<questions[count].options.length; i++) {
-            $('.inputs').append('<input type="radio" name="question" value="'+questions[count].options[i]+'">'+questions[count].options[i]+'<br>')
+            $('.inputs').append('<input class = "check" type="radio" name="question" value="'+questions[count].options[i]+'">'+questions[count].options[i]+'<br>')
         }
     };
+
+    var atLeastOneRadio = function() {
+        return ($('input[type=radio]:checked').size() > 0);
+    };
+
 
     /*--- First Question ---*/
     var name = "Question ";
@@ -61,6 +66,8 @@ $(document).ready(function() {
     var count = 0;
     var total = questions.length;
     loadQuestion();
+
+
 
     /*--- When the Next Question Button is Hit ---*/
     /*$('.next-question').keypress(function(e){
@@ -81,13 +88,17 @@ $(document).ready(function() {
         qnum++;
         count++;
         if (qnum <= 4) {
-            loadQuestion();
+            if(atLeastOneRadio()) {
+                loadQuestion();
+            }
         } else if (qnum == 6) {
-            $('.question-name').html("Your Score:");
-            $('.question').html("You got X out of 5 questions correct!");
-            nextQuestion.html("Home Screen").click(function() {
-                location.reload();
-            });
+            if(atLeastOneRadio()) {
+                $('.question-name').html("Your Score:");
+                $('.question').html("You got X out of 5 questions correct!");
+                nextQuestion.html("Home Screen").click(function() {
+                    location.reload();
+                });
+            }
         } else if (qnum == 5){
             loadQuestion();
             $('.next-question').html("Get Score!");
