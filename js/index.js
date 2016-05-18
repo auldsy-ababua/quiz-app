@@ -13,8 +13,10 @@ $(document).ready(function() {
     $(".newGame").click(function() {
         $(".game").fadeIn(1000);
     });
-    var nextQuestion = $(".next-question");
+    $(".playAgain").hide();
 
+    var nextQuestion = $(".next-question");
+    nextQuestion.show();
     nextQuestion.click(function() {
     console.log($('input:radio:checked').val());
     });
@@ -48,6 +50,7 @@ $(document).ready(function() {
 
     /*--- functions ---*/
     var loadQuestion = function (){
+        $('.next-question').prop("disabled", true);
         $('.question-name').html(name + (qnum) +"/"+ total);
         $('.question').html(questions[count].question);
         for(var i=0; i<questions[count].options.length; i++) {
@@ -93,13 +96,20 @@ $(document).ready(function() {
         } else if (qnum == 6) {
             $('.question-name').html("Your Score:");
             $('.question').html("You got X out of 5 questions correct!");
-            nextQuestion.html("Home Screen").click(function() {
-                location.reload();
-            });
+            $(".playAgain").show();
+            nextQuestion.hide();
         } else if (qnum == 5){
             loadQuestion();
             $('.next-question').html("Get Score!");
         }
+    });
+    $(".playAgain").click(function (){
+        count = 0;
+        qnum = 1;
+        $('.inputs').html("");
+        loadQuestion();
+        $(".playAgain").toggle();
+        nextQuestion.show().html("Next Question!");
     });
 });
 
