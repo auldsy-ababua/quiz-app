@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     $(".inst").click(function() {
         $(".overlay").fadeIn(1000);
     });
