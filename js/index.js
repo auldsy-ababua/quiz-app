@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    
     $(".inst").click(function() {
         $(".overlay").fadeIn(1000);
     });
@@ -13,12 +13,15 @@ $(document).ready(function() {
         $(".game").fadeIn(1000);
     });
     $(".playAgain").hide();
+    
+    
 
     var nextQuestion = $(".next-question");
     nextQuestion.show();
     nextQuestion.click(function() {
     console.log($('input:radio:checked').val());
     });
+    var userCorrectAnswer = 0;
     var questions = [
         {
             question: "How many legs does a dog have?",
@@ -73,20 +76,11 @@ $(document).ready(function() {
 
 
     /*--- When the Next Question Button is Hit ---*/
-    /*$('.next-question').keypress(function(e){
-       if(e.which == 13){//Enter key pressed
-            $('.inputs').html("");
-            qnum++;
-            count++;
-            if(qnum == 5) {
-                loadQuestion();
-                $('.next-question').html("Get Score!");
-            } else {
-                loadQuestion();
-            }
-        }
-    });*/
     nextQuestion.click(function() {
+        var currentAnswer = questions[count].answerIndex;
+        if ($("input[type='radio']")[currentAnswer].checked){
+            userCorrectAnswer++;
+        }
         $('.inputs').html("");
         qnum++;
         count++;
@@ -94,7 +88,7 @@ $(document).ready(function() {
             loadQuestion();
         } else if (qnum == 6) {
             $('.question-name').html("Your Score:");
-            $('.question').html("You got X out of 5 questions correct!");
+            $('.question').html("You got " + userCorrectAnswer + " out of 5 questions correct!");
             $(".playAgain").show();
             nextQuestion.hide();
         } else if (qnum == 5){
@@ -105,6 +99,7 @@ $(document).ready(function() {
     $(".playAgain").click(function (){
         count = 0;
         qnum = 1;
+        userCorrectAnswer = 0;
         $('.inputs').html("");
         loadQuestion();
         $(".playAgain").toggle();
